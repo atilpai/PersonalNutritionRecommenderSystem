@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestedScrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:paddingBottom="20dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="20dp"
+    tools:context="finalproject_nutritionrecommendersystem.csun.personalnutritionrecommendersystem.ProfileViewAndRecalculate">
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/ProfileTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/Greeting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/profile"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textAppearance="@android:style/TextAppearance.Material.Display1" />
+        </android.support.design.widget.TextInputLayout>
+
+        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/UserDetails"
+            android:stretchColumns="1">
+            <TableRow>
+
+                <TextView
+                    android:padding="6dip"
+                    android:text="@string/hint_name" />
+
+                <TextView
+                    android:id="@+id/name"
+                    android:gravity="end"
+                    android:padding="6dip" />
+            </TableRow>
+            <TableRow>
+
+                <TextView
+                    android:padding="6dip"
+                    android:text="@string/hint_email" />
+
+                <TextView
+
+                    android:id="@+id/email"
+                    android:gravity="end"
+                    android:padding="6dip" />
+            </TableRow>
+            <TableRow>
+
+                <TextView
+                    android:padding="6dip"
+                    android:text="@string/address" />
+
+                <TextView
+
+                    android:id="@+id/address"
+                    android:gravity="end"
+                    android:padding="6dip" />
+            </TableRow>
+            <TableRow>
+
+                <TextView
+                    android:padding="6dip"
+                    android:text="@string/phone" />
+
+                <TextView
+
+                    android:id="@+id/phone"
+                    android:gravity="end"
+                    android:padding="6dip" />
+            </TableRow>
+            <TableRow>
+
+                <TextView
+                    android:padding="6dip"
+                    android:text="@string/age" />
+
+                <EditText
+                    android:id="@+id/Age"
+                    android:gravity="end"
+                    android:padding="6dip"
+                    android:background="@android:color/transparent"
+                    />
+            </TableRow>
+            <TableRow>
+
+                <TextView
+                    android:padding="6dip"
+                    android:text="@string/height" />
+
+                <EditText
+
+                    android:id="@+id/height"
+                    android:gravity="end"
+                    android:inputType="numberDecimal"
+                    android:padding="6dip"
+                    android:background="@android:color/transparent"
+                    />
+            </TableRow>
+            <TableRow>
+
+                <TextView
+                    android:padding="6dip"
+                    android:text="@string/weight" />
+
+                <EditText
+
+                    android:id="@+id/weight"
+                    android:gravity="end"
+                    android:inputType="numberDecimal"
+                    android:padding="6dip"
+                    android:background="@android:color/transparent"/>
+            </TableRow>
+            <TableRow>
+
+                <TextView
+                    android:padding="6dip"
+                    android:text="@string/sex1" />
+
+                <TextView
+
+                    android:id="@+id/sex"
+                    android:gravity="end"
+                    android:padding="6dip" />
+            </TableRow>
+            <TableRow>
+
+                <TextView
+                    android:padding="3dip"
+                    android:text="@string/max_calories" />
+
+                <TextView
+
+                    android:id="@+id/calories"
+                    android:gravity="end"
+                    android:padding="3dip" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:padding="3dip"
+                    android:text="@string/max_proteins" />
+
+                <TextView
+                    android:id="@+id/protein"
+                    android:gravity="end"
+                    android:padding="3dip"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:padding="3dip"
+                    android:text="@string/max_fiber" />
+
+                <TextView
+                    android:id="@+id/fiber"
+                    android:gravity="end"
+                    android:padding="3dip"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:padding="3dip"
+                    android:text="@string/max_sodium" />
+
+                <TextView
+                    android:id="@+id/sodium"
+                    android:gravity="end"
+                    android:padding="3dip"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:padding="3dip"
+                    android:text="@string/max_sugar" />
+
+                <TextView
+                    android:id="@+id/sugar"
+                    android:gravity="end"
+                    android:padding="3dip"
+                    android:text="" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:padding="3dip"
+                    android:text="@string/max_carb" />
+
+                <TextView
+                    android:id="@+id/carb"
+                    android:gravity="end"
+                    android:padding="3dip"
+                    android:text="" />
+            </TableRow>
+        </TableLayout>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/appCompatButtonRecal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorTextHint"
+            android:onClick="onClick"
+            android:text="@string/recalculate" />
+
+    </android.support.v7.widget.LinearLayoutCompat>
+</android.support.v4.widget.NestedScrollView>

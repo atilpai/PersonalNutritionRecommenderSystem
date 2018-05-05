@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestedScrollView"
+    android:background="@color/colorBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="finalproject_nutritionrecommendersystem.csun.personalnutritionrecommendersystem.FoodItemAddActivity">
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/add_food_item"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:queryHint="@string/search"
+            app:actionViewClass="android.widget.SearchView"
+            app:showAsAction="always"
+            />
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/searchView"
+            />
+
+
+    </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/AddQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="@string/enter_quantity"
+                android:textColorHint="@color/colorAccent"
+                android:textColor="@android:color/white"
+                tools:inputType="number" />
+
+    </android.support.design.widget.TextInputLayout>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/appCompatButtonCalculate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorTextHint"
+            android:onClick="onClick"
+            android:text="@string/calculate" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/scanBarCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorTextHint"
+            android:onClick="onClick1"
+            android:text="Scan Barcode Of Item?" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/CurrentNutrients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/textCurrentNutrients"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="@string/current_nutrients"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </android.support.design.widget.TextInputLayout>
+
+        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:stretchColumns="1">
+            <TableRow>
+                <TextView
+                    android:text="@string/calories"
+                    android:padding="3dip" />
+                <TextView
+                    android:id="@+id/caloriesValue"
+                    android:gravity="end"
+                    android:padding="3dip" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="@string/proteins"
+                    android:padding="3dip" />
+                <TextView
+                    android:text=""
+                    android:id="@+id/protiensValue"
+                    android:gravity="end"
+                    android:padding="3dip" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="@string/fiber"
+                    android:padding="3dip" />
+                <TextView
+                    android:text=""
+                    android:id="@+id/fiberValue"
+                    android:gravity="end"
+                    android:padding="3dip" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="@string/sodium"
+                    android:padding="3dip" />
+                <TextView
+                    android:text=""
+                    android:id="@+id/sodiumValue"
+                    android:gravity="end"
+                    android:padding="3dip" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="@string/sugar"
+                    android:padding="3dip" />
+                <TextView
+                    android:text=""
+                    android:id="@+id/sugarValue"
+                    android:gravity="end"
+                    android:padding="3dip" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="@string/carb"
+                    android:padding="3dip" />
+                <TextView
+                    android:text=""
+                    android:id="@+id/carbValue"
+                    android:gravity="end"
+                    android:padding="3dip" />
+            </TableRow>
+        </TableLayout>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/appCompatDone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorTextHint"
+            android:onClick="onClick"
+            android:text="@string/done" />
+    </android.support.v7.widget.LinearLayoutCompat>
+
+</android.support.v4.widget.NestedScrollView>

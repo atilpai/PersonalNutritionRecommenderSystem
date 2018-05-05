@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="70dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    tools:context="finalproject_nutritionrecommendersystem.csun.personalnutritionrecommendersystem.GraphActivity">
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/back"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@color/colorTextHint"
+        android:onClick="onClick"
+        android:text="Back" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/nextView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="330dp"
+        android:background="@color/colorTextHint"
+        android:onClick="onClick"
+        android:text="View" />
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/idPieChart"
+        ></com.github.mikephil.charting.charts.PieChart>
+</RelativeLayout>
