@@ -208,6 +208,10 @@ public class MainActivity extends AppCompatActivity
             Intent loginActivity=new Intent(getApplicationContext(),Login.class);
             startActivity(loginActivity);
         }
+        else if(id == R.id.logout){
+            finish();
+            moveTaskToBack(true);
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

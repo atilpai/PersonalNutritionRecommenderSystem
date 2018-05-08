@@ -1,5 +1,6 @@
 package finalproject_nutritionrecommendersystem.csun.personalnutritionrecommendersystem;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
@@ -14,7 +15,7 @@ import sql.DatabaseHelper;
 public class ProfileViewAndRecalculate extends AppCompatActivity {
     String idStr;
     DatabaseHelper databaseHelper;
-    User user;
+    User user = new User();
     AppCompatButton appCompatButtonRecal;
     TableLayout UserDetails;
     EditText height,weight,age;
@@ -48,7 +49,6 @@ public class ProfileViewAndRecalculate extends AppCompatActivity {
         UserDetails=(TableLayout)findViewById(R.id.UserDetails);
         name=(TextView)findViewById(R.id.name);
         email=(TextView)findViewById(R.id.email);
-        address=(TextView)findViewById(R.id.address);
         phone=(TextView)findViewById(R.id.phone);
         sex=(TextView)findViewById(R.id.sex);
         maxCal=(TextView)findViewById(R.id.calories);
@@ -85,11 +85,15 @@ public class ProfileViewAndRecalculate extends AppCompatActivity {
             user.setHeight(Double.valueOf(height.getEditableText().toString().trim()));
             user.setWeight(Double.valueOf(weight.getEditableText().toString().trim()));
             user.setAge(Integer.valueOf(age.getEditableText().toString().trim()));
-            user.setId(id);
             user=databaseHelper.calculateRequiredValues(user);
             databaseHelper.saveToUserTable(user);
             setFields(user);
 
+            Intent mainIntent=new Intent(ProfileViewAndRecalculate.this, MainActivity.class);
+            mainIntent.putExtra("EMAIL",user.getEmail());
+            mainIntent.putExtra("ID",id);
+
+            startActivity(mainIntent);
         }
     }
 }

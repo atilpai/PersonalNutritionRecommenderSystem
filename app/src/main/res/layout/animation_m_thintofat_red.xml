@@ -14,7 +14,7 @@
         android:id="@+id/back"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="10dp"
         android:background="@color/colorTextHint"
         android:onClick="onClick"
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="* Red skin highlight depicts High Blood Pressure *\n* Higher Carbs/ Calories relaes to Obesity *"
-        />
+        android:textStyle="bold" />
 
     <ImageView
         android:layout_width="wrap_content"

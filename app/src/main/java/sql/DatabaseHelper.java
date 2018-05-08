@@ -29,8 +29,8 @@ public class DatabaseHelper {
     private static final String USER_PERDAY_COUNTER="dailyfoodcounter";
     private static final String FETCH_NUTRIENTS="nutrients_info";
     String url="jdbc:mysql://finalprojectcsun.curhdrjmgd2k.us-west-2.rds.amazonaws.com/foodnutrients";
-    String userCon="*****";
-    String passwordCon="****";
+    String userCon="*******";
+    String passwordCon="*********";
     Calendar c = Calendar.getInstance();
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -75,8 +75,8 @@ public class DatabaseHelper {
             Statement stmt = (Statement) con.createStatement();
             ResultSet rs;
             String sql = "INSERT INTO userprofile"
-                    + "(email, password) " + "VALUES"
-                    + "("+"'"+user.getEmail()+"',"+"'"+user.getPassword()+"')";
+                    + "(email, password, name) " + "VALUES"
+                    + "("+"'"+user.getEmail()+"',"+"'"+user.getPassword()+"', '"+user.getName()+"')";
 
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
@@ -160,23 +160,22 @@ public class DatabaseHelper {
     public void saveToUserTable(User user) {
         Connection con = getConnection();
         try {
-            String sql = "UPDATE userprofile set name=?, contact=?, gender=?, age=?, height=?, weight=?," +
+            String sql = "UPDATE userprofile set name=?, sex=?, age=?, height=?, weight=?," +
                     "max_cal=?, max_protein=?, max_fiber=?, max_sugar=?, max_sodium=?, max_carb=?"
                     +" WHERE email='"+user.getEmail()+"'";
 
             PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
             stmt.setString(1,user.getName());
-            stmt.setLong(2, Long.parseLong(user.getPhone()));
-            stmt.setString(3,user.getSex());
-            stmt.setInt(4,user.getAge());
-            stmt.setDouble(5,user.getHeight());
-            stmt.setDouble(6,user.getWeight());
-            stmt.setInt(7,user.getMax_cal());
-            stmt.setDouble(8,user.getMax_protein());
-            stmt.setDouble(9,user.getMax_fiber());
-            stmt.setDouble(10,user.getMax_sugar());
-            stmt.setInt(11,user.getMax_sodium());
-            stmt.setDouble(12,user.getMax_carb());
+            stmt.setString(2,user.getSex());
+            stmt.setInt(3,user.getAge());
+            stmt.setDouble(4,user.getHeight());
+            stmt.setDouble(5,user.getWeight());
+            stmt.setInt(6,user.getMax_cal());
+            stmt.setDouble(7,user.getMax_protein());
+            stmt.setDouble(8,user.getMax_fiber());
+            stmt.setDouble(9,user.getMax_sugar());
+            stmt.setInt(10,user.getMax_sodium());
+            stmt.setDouble(11,user.getMax_carb());
 
             stmt.executeUpdate();
             con.commit();
@@ -193,16 +192,9 @@ public class DatabaseHelper {
     }
 
     public User calculateRequiredValues(User user) {
-        Double BMR=0.0;
-        if(user.getSex().equals("M")|| user.getSex().equals("m")){
-            BMR= 66 + (6.23 * user.getWeight()) + (12.7*user.getHeight()/12) - (4.7*user.getAge());
-        }
-        else if(user.getSex().equals("F") || user.getSex().equals("f")){
-            BMR= 655 + (4.35 * user.getWeight()) + (4.7*user.getHeight()/12) - (6.8*user.getAge());
-        }
 
-        max_cal= (int) (BMR*1.275);
-        max_protein=user.getWeight()*1.275;
+        max_cal= (int) (user.getWeight()*11.4);
+        max_protein=user.getWeight()*0.2;
 
         if(user.getSex().equals("M")|| user.getSex().equals("m")){
             if(user.getAge()<50){
@@ -225,7 +217,7 @@ public class DatabaseHelper {
         user.setMax_cal(max_cal);
         user.setMax_sodium(max_sodium);
         user.setMax_sugar((double)max_cal/10);
-        user.setMax_carb((double)max_cal*11/80);
+        user.setMax_carb((double)max_cal*11/20);
 
         return user;
     }
@@ -324,7 +316,7 @@ public class DatabaseHelper {
         User user= new User();
        try {
            Connection con = getConnection();
-           String sql = "SELECT max_cal, max_protein, max_fiber,max_sugar, max_sodium, max_carb,name,age,email,gender,height,weight,contact" +
+           String sql = "SELECT max_cal, max_protein, max_fiber,max_sugar, max_sodium, max_carb,name,age,email,sex,height,weight,phone" +
                    " FROM foodnutrients.userprofile WHERE id=" + id;
            PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
            ResultSet rs = (ResultSet) stmt.executeQuery();
