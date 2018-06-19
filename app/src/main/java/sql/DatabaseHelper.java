@@ -28,7 +28,7 @@ public class DatabaseHelper {
     private static final String TABLE_USER = "userprofile";
     private static final String USER_PERDAY_COUNTER="dailyfoodcounter";
     private static final String FETCH_NUTRIENTS="nutrients_info";
-    String url="jdbc:mysql://finalprojectcsun.curhdrjmgd2k.us-west-2.rds.amazonaws.com/foodnutrients";
+    String url="jdbc:mysql://finalprojectcsun.amazon_rds_instance_url";
     String userCon="*******";
     String passwordCon="*********";
     Calendar c = Calendar.getInstance();
