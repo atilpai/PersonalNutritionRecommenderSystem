@@ -36,6 +36,15 @@ public class UserCalorieCount {
     public void setTotal_protein(double total_protein) {
         this.total_protein = total_protein;
     }
+
+    public double getTotal_fat() {
+        return total_fat;
+    }
+
+    public void setTotal_fat(double total_fat) {
+        this.total_fat = total_fat;
+    }
+
     public int getTotal_sodium() {
         return total_sodium;
     }
@@ -69,6 +78,7 @@ public class UserCalorieCount {
     private Date date;
     private int total_cal;
     private double total_protein;
+    private double total_fat;
     private double total_fiber;
     private int total_sodium;
     private double total_sugar, total_carb;

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class GraphActivity2 extends AppCompatActivity {
 
     BarChart barChart;
-    String proteins, calories, sugar, carb, sodium, fiber, remProteins, remCal, remFiber, remCarb, remSugar, remSodium;
+    String proteins, calories, fat, sugar, carb, sodium, fiber, remProteins, remFat, remCal, remFiber, remCarb, remSugar, remSodium;
     String email="";
     String id="";
 
@@ -34,6 +34,8 @@ public class GraphActivity2 extends AppCompatActivity {
 
         proteins = getIntent().getStringExtra("Proteins");
         remProteins = getIntent().getStringExtra("remainingProteins");
+        fat = getIntent().getStringExtra("Fat");
+        remFat = getIntent().getStringExtra("remainingFat");
         calories = getIntent().getStringExtra("Calories");
         remCal = getIntent().getStringExtra("remainingCalories");
         fiber = getIntent().getStringExtra("Fiber");
@@ -74,7 +76,7 @@ public class GraphActivity2 extends AppCompatActivity {
         barEntries.add(new BarEntry(3, Float.parseFloat(sodium)));
         barEntries.add(new BarEntry(4, Float.parseFloat(fiber)));
         barEntries.add(new BarEntry(5, Float.parseFloat(carb)));
-        barEntries.add(new BarEntry(6, Float.parseFloat(calories)));
+        barEntries.add(new BarEntry(6, Float.parseFloat(fat)));
 
         BarDataSet barDataSet = new BarDataSet(barEntries, "Nutrient consumption");
         barDataSet.setColors(colors);
@@ -86,7 +88,7 @@ public class GraphActivity2 extends AppCompatActivity {
         barEntries1.add(new BarEntry(3, (Float.parseFloat(sodium))-(Float.parseFloat(remSodium))));
         barEntries1.add(new BarEntry(4,Float.parseFloat(fiber)- Float.parseFloat(remFiber)));
         barEntries1.add(new BarEntry(5, Float.parseFloat(carb)-Float.parseFloat(remCarb)));
-        barEntries1.add(new BarEntry(6, Float.parseFloat(calories)-Float.parseFloat(remCal)));
+        barEntries1.add(new BarEntry(6, Float.parseFloat(fat)-Float.parseFloat(remFat)));
 
         BarDataSet barDataSet1 = new BarDataSet(barEntries1, "");
         barDataSet1.setColors(Color.BLACK);
@@ -100,19 +102,11 @@ public class GraphActivity2 extends AppCompatActivity {
 
         barChart.setData(barData);
         Description descr = new Description();
-        descr.setText(" Proteins(g) - Sugar(kcals) - Sodium(mg) - Fiber(g) - Carbs(g) - Calories(kcals) ");
+        descr.setText(" Proteins(g) - Sugar(g) - Sodium(mg) - Fiber(g) - Carbs(g) - Fat(g) ");
         descr.setTextColor(Color.BLACK);
         descr.setTextSize(10.5f);
         barChart.setDescription(descr);
         barData.setBarWidth(0.8f);
-
-//        String[] nutrients = new String[] {"Proteins", "Sugar", "Sodium", "Fiber", "Carbs", "Calories"};
-//        XAxis xAxis = barChart.getXAxis();
-//        xAxis.setValueFormatter(new MyXAxisValueFormatter(nutrients));
-//        xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
-//        xAxis.setGranularity(1);
-//        xAxis.setCenterAxisLabels(true);
-//        xAxis.setAxisMinimum(1);
     }
 
     public class MyXAxisValueFormatter implements IAxisValueFormatter{
@@ -129,21 +123,23 @@ public class GraphActivity2 extends AppCompatActivity {
     }
 
     public void onClick(View v){
-        if(v.getId()==R.id.nextView){
-            Intent nextView=new Intent(getApplicationContext(),Animation.class);
-            nextView.putExtra("remainingProteins", remProteins);
-            nextView.putExtra("remainingFiber", remFiber);
-            nextView.putExtra("remainingSugar", remSugar);
-            nextView.putExtra("remainingSodium", remSodium);
-            nextView.putExtra("remainingCarbs", remCarb);
-            nextView.putExtra("remainingCalories", remCal);
-            nextView.putExtra("EMAIL",email);
-            nextView.putExtra("ID",id);
-            startActivity(nextView);
-        }
-        else if(v.getId() ==R.id.back){
+//        if(v.getId()==R.id.nextView){
+//            Intent nextView=new Intent(getApplicationContext(),Animation.class);
+//            nextView.putExtra("remainingProteins", remProteins);
+//            nextView.putExtra("remainingFiber", remFiber);
+//            nextView.putExtra("remainingSugar", remSugar);
+//            nextView.putExtra("remainingSodium", remSodium);
+//            nextView.putExtra("remainingCarbs", remCarb);
+//            nextView.putExtra("remainingCalories", remCal);
+//            nextView.putExtra("EMAIL",email);
+//            nextView.putExtra("ID",id);
+//            startActivity(nextView);
+//        }
+//        else
+          if(v.getId() ==R.id.back){
             Intent backToMain=new Intent(getApplicationContext(),GraphActivity.class);
             backToMain.putExtra("remainingProteins", remProteins);
+              backToMain.putExtra("remainingFat", remFat);
             backToMain.putExtra("remainingFiber", remFiber);
             backToMain.putExtra("remainingSugar", remSugar);
             backToMain.putExtra("remainingSodium", remSodium);
@@ -152,6 +148,7 @@ public class GraphActivity2 extends AppCompatActivity {
             backToMain.putExtra("EMAIL",email);
             backToMain.putExtra("ID",id);
             backToMain.putExtra("Proteins", proteins);
+              backToMain.putExtra("Fat", fat);
             backToMain.putExtra("Fiber", fiber);
             backToMain.putExtra("Sugar",sugar);
             backToMain.putExtra("Sodium", sodium);

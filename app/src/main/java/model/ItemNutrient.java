@@ -28,6 +28,14 @@ public class ItemNutrient {
         this.proteins = proteins;
     }
 
+    public double getFat() {
+        return fat;
+    }
+
+    public void setFat(double fat) {
+        this.fat = fat;
+    }
+
     public double getFiber() {
         return fiber;
     }
@@ -62,6 +70,7 @@ public class ItemNutrient {
 
     private int calories;
     private double proteins;
+    private double fat;
     private double fiber;
     private double sugar;
     private double carb;

@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import model.User;
 import model.UserCalorieCount;
 import sql.DatabaseHelper;
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity
     TextView greeting;
     String email="",name="";
     DatabaseHelper databaseHelper=new DatabaseHelper();
-    TextView cal,pro,fiber,sugar, sodium, carb;
+    TextView cal,pro,fiber,sugar, sodium, carb, fat;
     int id;
     UserCalorieCount userCalCount;
     User user;
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity
         sugar=(TextView)findViewById(R.id.remainingsugar);
         sodium=(TextView)findViewById(R.id.remainingsodium);
         carb=(TextView)findViewById(R.id.remainingcarb);
+        fat=(TextView)findViewById(R.id.remainingFat);
     }
 
 
@@ -92,6 +95,14 @@ public class MainActivity extends AppCompatActivity
         }
         else {
             pro.setText(String.valueOf((float)userCalCount.getTotal_protein()));
+        }
+        if(userCalCount.getTotal_fat()>user.getMax_fat()){
+            fat.setBackgroundColor(Color.RED);
+            fat.setTextColor(Color.WHITE);
+            fat.setText("+ "+String.valueOf((float)(userCalCount.getTotal_fat()-user.getMax_fat())));
+        }
+        else {
+            fat.setText(String.valueOf((float)userCalCount.getTotal_fat()));
         }
         if(userCalCount.getTotal_fiber()>user.getMax_fiber()){
             fiber.setBackgroundColor(Color.RED);
@@ -134,6 +145,10 @@ public class MainActivity extends AppCompatActivity
         }
         if((user.getMax_protein()-userCalCount.getTotal_protein())<0){
             notification.append("- Proteins");
+            i=i+1;
+        }
+        if((user.getMax_fat()-userCalCount.getTotal_fat())<0){
+            notification.append("- Fat");
             i=i+1;
         }
         if((user.getMax_fiber()-userCalCount.getTotal_fiber())<0){
@@ -230,6 +245,8 @@ public class MainActivity extends AppCompatActivity
             UserCalorieCount maxCount = databaseHelper.fetchMaxNutrients(id);
             graphView.putExtra("Proteins", String.valueOf(maxCount.getTotal_protein()));
             graphView.putExtra("remainingProteins", String.valueOf(user.getMax_protein()-userCalCount.getTotal_protein()));
+            graphView.putExtra("Fat", String.valueOf(maxCount.getTotal_fat()));
+            graphView.putExtra("remainingFat", String.valueOf(user.getMax_fat()-userCalCount.getTotal_fat()));
             graphView.putExtra("Fiber", String.valueOf(maxCount.getTotal_fiber()));
             graphView.putExtra("remainingFiber", String.valueOf(user.getMax_fiber()-userCalCount.getTotal_fiber()));
             graphView.putExtra("Sugar", String.valueOf(maxCount.getTotal_sugar()));
@@ -240,6 +257,7 @@ public class MainActivity extends AppCompatActivity
             graphView.putExtra("remainingCarbs", String.valueOf(user.getMax_carb()-userCalCount.getTotal_carb()));
             graphView.putExtra("Calories", String.valueOf(maxCount.getTotal_cal()));
             graphView.putExtra("remainingCalories", String.valueOf(user.getMax_cal()-userCalCount.getTotal_cal()));
+            //fat
             graphView.putExtra("EMAIL",email);
             graphView.putExtra("ID",String.valueOf(id));
             startActivity(graphView);

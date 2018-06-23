@@ -36,13 +36,13 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
     SearchView simpleSearchView;
     ListView list;
     ListViewAdaptor adapter;
-    String email, cal, sodium, sugar, carbs, fiber, protein;
+    String email, cal, sodium, sugar, carbs, fiber, protein, fat;
     Barcode barcode;
     String selItem;
     ItemNutrient itemNutrient;
     TextInputLayout addQuan;
     TextInputEditText addQuantity;
-    TextView calorieValue,proteinValue,fiberValue,sugarValue, sodiumValue, carbValue;
+    TextView calorieValue,proteinValue,fiberValue,sugarValue, sodiumValue, carbValue, fatValue;
     //Barcode Scanner initiation
     TextView result;
     public static  final int REQUEST_CODE = 100;
@@ -59,6 +59,7 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
         sugarValue=(TextView) findViewById(R.id.sugarValue);
         sodiumValue=(TextView) findViewById(R.id.sodiumValue);
         carbValue=(TextView) findViewById(R.id.carbValue);
+        fatValue=(TextView) findViewById(R.id.fatValue);
         email = getIntent().getStringExtra("EMAIL");
         cal = getIntent().getStringExtra("calories");
         sodium = getIntent().getStringExtra("sodium");
@@ -66,6 +67,7 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
         fiber =getIntent().getStringExtra("fiber");
         protein = getIntent().getStringExtra("protein");
         carbs = getIntent().getStringExtra("carbs");
+        fat = getIntent().getStringExtra("fat");
 //        barcode = getIntent().getParcelableExtra("barcode");
         id=databaseHelper.getId(email);
         simpleSearchView=(SearchView)findViewById(R.id.searchView);
@@ -78,6 +80,7 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
             sugarValue.setText(sugar);
             sodiumValue.setText(sodium);
             proteinValue.setText(protein);
+            fatValue.setText(fat);
         }
         else{
             flag=2;
@@ -124,6 +127,7 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
             sodiumValue.setText(String.valueOf(itemNutrient.getSodium()));
             sugarValue.setText(String.valueOf(itemNutrient.getSugar()));
             carbValue.setText(String.valueOf(itemNutrient.getCarb()));
+            fatValue.setText(String.valueOf(itemNutrient.getFat()));
         }
 
         if(v.getId()==R.id.appCompatDone) {
@@ -136,6 +140,7 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
                     userCalCount.setTotal_sugar(userCalCount.getTotal_sugar() + (itemNutrient.getSugar() * n));
                     userCalCount.setTotal_sodium(userCalCount.getTotal_sodium() + (itemNutrient.getSodium() * n));
                     userCalCount.setTotal_carb(userCalCount.getTotal_carb() + (itemNutrient.getCarb() * n));
+                    userCalCount.setTotal_fat(userCalCount.getTotal_fat() + (itemNutrient.getFat() * n));
                 } else {
                     calculateNewValues();
                 }
@@ -154,6 +159,7 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
                 userCalCount.setTotal_sugar(userCalCount.getTotal_sugar() +Double.valueOf(sugar));
                 userCalCount.setTotal_sodium(userCalCount.getTotal_sodium() +Integer.valueOf(sodium));
                 userCalCount.setTotal_carb(userCalCount.getTotal_carb() +Double.valueOf(carbs));
+                userCalCount.setTotal_fat(userCalCount.getTotal_fat() +Double.valueOf(fat));
 
                 databaseHelper.updateUserCalorieCountTable(userCalCount);
             }
@@ -201,6 +207,7 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
         userCalCount.setTotal_sugar(userCalCount.getTotal_sugar()+itemNutrient.getSugar());
         userCalCount.setTotal_sodium(userCalCount.getTotal_sodium()+itemNutrient.getSodium());
         userCalCount.setTotal_carb(userCalCount.getTotal_carb()+itemNutrient.getCarb());
+        userCalCount.setTotal_fat(userCalCount.getTotal_fat()+itemNutrient.getFat());
     }
 
     @Override

@@ -29,12 +29,12 @@ public class DatabaseHelper {
     private static final String USER_PERDAY_COUNTER="dailyfoodcounter";
     private static final String FETCH_NUTRIENTS="nutrients_info";
     String url="jdbc:mysql://finalprojectcsun.curhdrjmgd2k.us-west-2.rds.amazonaws.com/foodnutrients";
-    String userCon="*******";
-    String passwordCon="*********";
+    String userCon="**************";
+    String passwordCon="***********";
     Calendar c = Calendar.getInstance();
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-    private double max_protein,max_fiber, max_carb, max_sugar;
+    private double max_protein,max_fiber, max_carb, max_sugar, max_fat;
     private int max_sodium=2300, max_cal;
     private UserCalorieCount userCalCount;
 
@@ -161,7 +161,7 @@ public class DatabaseHelper {
         Connection con = getConnection();
         try {
             String sql = "UPDATE userprofile set name=?, sex=?, age=?, height=?, weight=?," +
-                    "max_cal=?, max_protein=?, max_fiber=?, max_sugar=?, max_sodium=?, max_carb=?"
+                    "max_cal=?, max_protein=?, max_fiber=?, max_sugar=?, max_sodium=?, max_carb=?, max_fat=?"
                     +" WHERE email='"+user.getEmail()+"'";
 
             PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
@@ -176,6 +176,7 @@ public class DatabaseHelper {
             stmt.setDouble(9,user.getMax_sugar());
             stmt.setInt(10,user.getMax_sodium());
             stmt.setDouble(11,user.getMax_carb());
+            stmt.setDouble(12, user.getMax_fat());
 
             stmt.executeUpdate();
             con.commit();
@@ -192,9 +193,24 @@ public class DatabaseHelper {
     }
 
     public User calculateRequiredValues(User user) {
+        double bmr = 0.0;
+        if (user.getSex().equals("F") || user.getSex().equals("f"))  bmr = 655 + (4.35*user.getWeight()) + (4.7*0.083*user.getHeight()) - (4.7*user.getAge());
+        else bmr = 66 + (6.23*user.getWeight()) + (12.7*0.083*user.getHeight()) - (6.8*user.getAge());
 
-        max_cal= (int) (user.getWeight()*11.4);
-        max_protein=user.getWeight()*0.2;
+        max_cal= (int) (bmr*1.55);
+
+        if(user.getAge() < 20) {
+            max_protein = 0.2*bmr*1.55;
+            max_carb = 0.55*bmr*1.55;
+            max_sugar = 0.1*bmr*1.55;
+            max_fat = 0.1*bmr*1.55;
+        }
+        else if(user.getAge() > 20 ) {
+            max_protein = 0.22*bmr*1.55;
+            max_carb = 0.55*bmr*1.55;
+            max_sugar = 0.1*bmr*1.55;
+            max_fat = 0.1*bmr*1.55;
+        }
 
         if(user.getSex().equals("M")|| user.getSex().equals("m")){
             if(user.getAge()<50){
@@ -216,8 +232,8 @@ public class DatabaseHelper {
         user.setMax_fiber(max_fiber);
         user.setMax_cal(max_cal);
         user.setMax_sodium(max_sodium);
-        user.setMax_sugar((double)max_cal/10);
-        user.setMax_carb((double)max_cal*11/20);
+        user.setMax_sugar(max_sugar);
+        user.setMax_carb(max_carb);
 
         return user;
     }
@@ -236,6 +252,8 @@ public class DatabaseHelper {
                         + userCalCount.getTotal_protein()
                         + ", curr_fiber="
                         + userCalCount.getTotal_fiber()
+                        + ", curr_fat="
+                        + userCalCount.getTotal_fat()
                         + ", curr_sodium="
                         + userCalCount.getTotal_sodium()
                         + ", curr_sugar="
@@ -247,10 +265,11 @@ public class DatabaseHelper {
                 stmt.executeUpdate();
             }else{
                 String sql="INSERT INTO dailyfoodcounter"
-                        + "(mainid,currentdate,curr_cal,curr_proteins,curr_fiber, curr_sugar, curr_sodium, curr_carb) " + "VALUES"
+                        + "(mainid, currentdate, curr_cal, curr_proteins, curr_fat, curr_fiber, curr_sugar, curr_sodium, curr_carb) " + "VALUES"
                         + "("+"'"+userCalCount.getId()+"'"+",'"+df.format(date)+"'"
                         +",'"+userCalCount.getTotal_cal()+"'"
                         +",'"+userCalCount.getTotal_protein()+"'"
+                        +",'"+userCalCount.getTotal_fat()+"'"
                         +",'"+userCalCount.getTotal_fiber()+"'"
                         +",'"+userCalCount.getTotal_sugar()+"'"
                         +",'"+userCalCount.getTotal_sodium()+"'"
@@ -290,7 +309,7 @@ public class DatabaseHelper {
         Connection con = getConnection();
         java.util.Date date=c.getTime();
         try{
-            String sql ="SELECT curr_cal, curr_proteins, curr_fiber, curr_sodium, curr_sugar, curr_carb FROM foodnutrients.dailyfoodcounter WHERE mainid=" + id
+            String sql ="SELECT curr_cal, curr_proteins, curr_fat, curr_fiber, curr_sodium, curr_sugar, curr_carb FROM foodnutrients.dailyfoodcounter WHERE mainid=" + id
                     + " and currentdate='"+df.format(date)+"'";
 
             PreparedStatement stmt= (PreparedStatement) con.prepareStatement(sql);
@@ -299,6 +318,7 @@ public class DatabaseHelper {
                 userCalCount.setTotal_cal(rs.getInt("curr_cal"));
                 userCalCount.setTotal_fiber(rs.getDouble("curr_fiber"));
                 userCalCount.setTotal_protein(rs.getDouble("curr_proteins"));
+                userCalCount.setTotal_fat(rs.getDouble("curr_fat"));
                 userCalCount.setTotal_sodium(rs.getInt("curr_sodium"));
                 userCalCount.setTotal_sugar(rs.getDouble("curr_sugar"));
                 userCalCount.setTotal_carb(rs.getDouble("curr_carb"));
@@ -316,7 +336,7 @@ public class DatabaseHelper {
         User user= new User();
        try {
            Connection con = getConnection();
-           String sql = "SELECT max_cal, max_protein, max_fiber,max_sugar, max_sodium, max_carb,name,age,email,sex,height,weight,phone" +
+           String sql = "SELECT max_cal, max_protein, max_fat, max_fiber,max_sugar, max_sodium, max_carb,name,age,email,sex,height,weight,phone" +
                    " FROM foodnutrients.userprofile WHERE id=" + id;
            PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
            ResultSet rs = (ResultSet) stmt.executeQuery();
@@ -325,6 +345,7 @@ public class DatabaseHelper {
                user.setMax_cal(rs.getInt("max_cal"));
                user.setMax_fiber(rs.getDouble("max_fiber"));
                user.setMax_protein(rs.getDouble("max_protein"));
+               user.setMax_fat(rs.getDouble("max_fat"));
                user.setMax_sodium(rs.getInt("max_sodium"));
                user.setMax_sugar(rs.getDouble("max_sugar"));
                user.setMax_carb(rs.getDouble("max_carb"));
@@ -350,7 +371,7 @@ public class DatabaseHelper {
         User user= new User();
         try {
             Connection con = getConnection();
-            String sql = "SELECT max_cal, max_protein, max_fiber, max_sodium, max_carb, max_sugar, name" +
+            String sql = "SELECT max_cal, max_protein, max_fat, max_fiber, max_sodium, max_carb, max_sugar, name" +
                     " FROM foodnutrients.userprofile WHERE id=" + id;
             PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
             ResultSet rs = (ResultSet) stmt.executeQuery();
@@ -359,6 +380,7 @@ public class DatabaseHelper {
                 user.setMax_cal(rs.getInt("max_cal"));
                 user.setMax_fiber(rs.getDouble("max_fiber"));
                 user.setMax_protein(rs.getDouble("max_protein"));
+                user.setMax_fat(rs.getDouble("max_fat"));
                 user.setMax_sugar(rs.getDouble("max_sugar"));
                 user.setMax_sodium(rs.getInt("max_sodium"));
                 user.setMax_carb(rs.getDouble("max_carb"));
@@ -458,6 +480,7 @@ public class DatabaseHelper {
             while (rs.next()){
                 itemNutrient.setCalories( rs.getInt("calories_kcal"));
                 itemNutrient.setFiber(rs.getDouble("fiber"));
+                itemNutrient.setFat(rs.getDouble("fat"));
                 itemNutrient.setProteins(rs.getDouble("proteins"));
                 itemNutrient.setCarb(rs.getDouble("carbohydrates"));
                 itemNutrient.setSugar(rs.getDouble("sugar"));
@@ -477,7 +500,7 @@ public class DatabaseHelper {
         userCalCount=new UserCalorieCount();
         Connection con = getConnection();
         try{
-            String sql ="SELECT curr_cal, curr_proteins, curr_fiber, curr_date FROM " +
+            String sql ="SELECT curr_cal, curr_proteins, curr_fat, curr_fiber, curr_date FROM " +
                     "all_nutrients.user_perday_counter WHERE id=" + id +" and curr_date BETWEEN"+"'"+fromDate+"' AND '"+toDate+"'" ;
 
             PreparedStatement stmt= (PreparedStatement) con.prepareStatement(sql);
@@ -487,6 +510,7 @@ public class DatabaseHelper {
                 userCalCount.setTotal_cal(rs.getInt("curr_cal"));
                 userCalCount.setTotal_fiber(rs.getDouble("curr_fiber"));
                 userCalCount.setTotal_protein(rs.getDouble("curr_proteins"));
+                userCalCount.setTotal_fat(rs.getDouble("curr_fat"));
                 userCalCount.setTotal_sugar(rs.getDouble("curr_sugar"));
                 userCalCount.setTotal_sodium(rs.getInt("curr_sodium"));
                 userCalCount.setTotal_carb(rs.getDouble("curr_carb"));
@@ -507,7 +531,7 @@ public class DatabaseHelper {
         userCalCount=new UserCalorieCount();
         Connection con = getConnection();
         try{
-            String sql ="SELECT max_cal, max_protein, max_fiber, max_sodium, max_sugar, max_carb FROM " +
+            String sql ="SELECT max_cal, max_protein, max_fat, max_fiber, max_sodium, max_sugar, max_carb FROM " +
                     "foodnutrients.userprofile WHERE id=" + id ;
 
             PreparedStatement stmt= (PreparedStatement) con.prepareStatement(sql);
@@ -517,6 +541,7 @@ public class DatabaseHelper {
                 userCalCount.setTotal_cal(rs.getInt("max_cal"));
                 userCalCount.setTotal_fiber(rs.getDouble("max_fiber"));
                 userCalCount.setTotal_protein(rs.getDouble("max_protein"));
+                userCalCount.setTotal_fat(rs.getDouble("max_fat"));
                 userCalCount.setTotal_sugar(rs.getDouble("max_sugar"));
                 userCalCount.setTotal_sodium(rs.getInt("max_sodium"));
                 userCalCount.setTotal_carb(rs.getDouble("max_carb"));

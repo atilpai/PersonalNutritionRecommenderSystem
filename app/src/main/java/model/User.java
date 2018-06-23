@@ -16,6 +16,7 @@ public class User {
     private int max_sodium;
     private double max_sugar;
     private double max_carb;
+    private double max_fat;
     private int age;
 
     public User() {
@@ -76,6 +77,14 @@ public class User {
 
     public void setMax_protein(Double max_protein) {
         this.max_protein = max_protein;
+    }
+
+    public double getMax_fat() {
+        return max_fat;
+    }
+
+    public void setMax_fat(Double max_fat) {
+        this.max_fat = max_fat;
     }
 
     public int getMax_sodium() {

@@ -25,7 +25,7 @@ import java.util.List;
 public class GraphActivity extends AppCompatActivity {
 
     PieChart piechart;
-    String proteins, calories, sugar, carb, sodium, fiber, remProteins, remCal, remFiber, remCarb, remSugar, remSodium;
+    String proteins, fat, calories, sugar, carb, sodium, fiber, remProteins, remFat, remCal, remFiber, remCarb, remSugar, remSodium;
     String email="";
     String id="";
 
@@ -36,6 +36,8 @@ public class GraphActivity extends AppCompatActivity {
 
         proteins = String.valueOf(Float.valueOf(getIntent().getStringExtra("Proteins")));
         remProteins = getIntent().getStringExtra("remainingProteins");
+        fat = String.valueOf(Float.valueOf(getIntent().getStringExtra("Fat")));
+        remFat = getIntent().getStringExtra("remainingFat");
         calories = getIntent().getStringExtra("Calories");
         remCal = getIntent().getStringExtra("remainingCalories");
         fiber = getIntent().getStringExtra("Fiber");
@@ -54,52 +56,52 @@ public class GraphActivity extends AppCompatActivity {
     }
 
     private void setupPieChart(){
-        final String[] xData = {"Proteins:\n"+proteins,"Sugar:\n"+sugar,"Sodium(mg):\n"+sodium,
-                "Fiber:\n"+fiber,"Carbs:\n"+carb,"Calories(kCal):\n"+calories};
-        float[] yData = {16f,16f,16f,16f,16f,17f};
-        final String[] yData2 = {remProteins, remSugar, remSodium, remFiber, remCarb,remCal};
-
-        List<PieEntry> pieEntries = new ArrayList<>();
-        for(int i=0; i<yData.length;i++){
-            pieEntries.add(new PieEntry(yData[i], xData[i]));
-        }
-        ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(Color.GRAY);
-        colors.add(Color.MAGENTA);
-        colors.add(Color.YELLOW);
-        colors.add(Color.GREEN);
-        colors.add(Color.RED);
-        colors.add(Color.CYAN);
-
-
-        PieDataSet dataSet = new PieDataSet(pieEntries, "");
-        dataSet.setColors(colors);
-        dataSet.setSliceSpace(2);
-        dataSet.setSelectionShift(5f);
-        dataSet.setValueTextSize(0f);
-        dataSet.setValueTextColor(Color.BLACK);
-        dataSet.setHighlightEnabled(true);
-//        dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
-
-        PieData data = new PieData(dataSet);
-
         piechart = (PieChart) findViewById(R.id.idPieChart);
-        piechart.setData(data);
-
-        piechart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-                int pos = (int) h.getX();
-                Toast.makeText(GraphActivity.this,"Remaining "+ xData[pos].substring(0,xData[pos].indexOf(':')) + ": "+yData2[pos], Toast.LENGTH_LONG).show();
+        float consumedCalories = (Float.valueOf(calories)-Float.valueOf(remCal));
+        float totalCal = Float.valueOf(calories);
+        if(consumedCalories<=totalCal){
+            final String[] xData = {"Consumed:\n"+consumedCalories+"kcal", "Remaining :\n"+remCal+"kcal"};
+            float[] yData = {consumedCalories*100/totalCal,Float.valueOf(remCal)*100/totalCal};
+            List<PieEntry> pieEntries = new ArrayList<>();
+            for(int i=0; i<yData.length;i++){
+                pieEntries.add(new PieEntry(yData[i], xData[i]));
             }
+            ArrayList<Integer> colors = new ArrayList<>();
+            colors.add(Color.GREEN);
+            colors.add(Color.RED);
 
-            @Override
-            public void onNothingSelected() {
-
+            PieDataSet dataSet = new PieDataSet(pieEntries, "");
+            dataSet.setColors(colors);
+            dataSet.setSliceSpace(2);
+            dataSet.setSelectionShift(5f);
+            dataSet.setValueTextSize(0f);
+            dataSet.setValueTextColor(Color.BLACK);
+            dataSet.setHighlightEnabled(true);
+            PieData data = new PieData(dataSet);
+            piechart.setData(data);
+        }
+        else{
+            final String[] xData = {"Over Consumed:\n"+(consumedCalories-totalCal)+"kcal"};
+            float[] yData = {100f};
+            List<PieEntry> pieEntries = new ArrayList<>();
+            for(int i=0; i<yData.length;i++){
+                pieEntries.add(new PieEntry(yData[i], xData[i]));
             }
-        });
+            ArrayList<Integer> colors = new ArrayList<>();
+            colors.add(Color.RED);
 
-        piechart.setCenterText("Max consumable Nutrient breakdown");
+            PieDataSet dataSet = new PieDataSet(pieEntries, "");
+            dataSet.setColors(colors);
+            dataSet.setSliceSpace(2);
+            dataSet.setSelectionShift(5f);
+            dataSet.setValueTextSize(0f);
+            dataSet.setValueTextColor(Color.BLACK);
+            dataSet.setHighlightEnabled(true);
+            PieData data = new PieData(dataSet);
+            piechart.setData(data);
+        }
+
+        piechart.setCenterText("Calories consumption");
         piechart.setCenterTextTypeface(Typeface.DEFAULT_BOLD);
         piechart.setEntryLabelColor(Color.BLACK);
         piechart.setEntryLabelTextSize(13.5f);
@@ -115,6 +117,7 @@ public class GraphActivity extends AppCompatActivity {
         if(v.getId()==R.id.nextView){
             Intent nextView=new Intent(getApplicationContext(),GraphActivity2.class);
             nextView.putExtra("remainingProteins", remProteins);
+            nextView.putExtra("remainingFat", remFat);
             nextView.putExtra("remainingFiber", remFiber);
             nextView.putExtra("remainingSugar", remSugar);
             nextView.putExtra("remainingSodium", remSodium);
@@ -123,6 +126,7 @@ public class GraphActivity extends AppCompatActivity {
             nextView.putExtra("EMAIL",email);
             nextView.putExtra("ID",id);
             nextView.putExtra("Proteins", proteins);
+            nextView.putExtra("Fat", fat);
             nextView.putExtra("Fiber", fiber);
             nextView.putExtra("Sugar",sugar);
             nextView.putExtra("Sodium", sodium);

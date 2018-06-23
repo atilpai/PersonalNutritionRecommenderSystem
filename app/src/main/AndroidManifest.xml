@@ -47,7 +47,6 @@
         <activity android:name=".ScanActivity" />
         <activity android:name=".ProfileViewAndRecalculate" />
         <activity android:name=".GraphActivity" />
-        <activity android:name=".Animation" />
         <activity android:name=".GraphActivity2"></activity>
     </application>
 

@@ -37,7 +37,7 @@ public class Profile extends AppCompatActivity {
     private DatabaseHelper databaseHelper;
     private User user;
     String name,email,psswd;
-    private Double max_carb= Double.valueOf(0),max_protein= Double.valueOf(0),max_fiber= Double.valueOf(0), max_sugar= Double.valueOf(0);
+    private Double max_carb= Double.valueOf(0),max_protein= Double.valueOf(0),max_fiber= Double.valueOf(0), max_sugar= Double.valueOf(0), max_fat= Double.valueOf(0);
     private Integer max_cal=0, max_sodium=0;
 
 
@@ -113,6 +113,7 @@ public class Profile extends AppCompatActivity {
         user.setMax_cal(max_cal);
         user.setMax_fiber(max_fiber);
         user.setMax_protein(max_protein);
+        user.setMax_fat(max_fat);
         user.setMax_carb(max_carb);
         user.setMax_sodium(max_sodium);
         user.setMax_sugar(max_sugar);

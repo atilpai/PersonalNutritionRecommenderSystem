@@ -19,7 +19,7 @@ public class ProfileViewAndRecalculate extends AppCompatActivity {
     AppCompatButton appCompatButtonRecal;
     TableLayout UserDetails;
     EditText height,weight,age;
-    TextView name, email,address,phone,sex, maxCal,maxPro,maxFiber, maxSodium, maxSugar, maxCarb;
+    TextView name, email,address,phone,sex, maxCal,maxPro,maxFiber, maxSodium, maxSugar, maxCarb, maxFat;
     Integer id;
 
     @Override
@@ -53,6 +53,7 @@ public class ProfileViewAndRecalculate extends AppCompatActivity {
         sex=(TextView)findViewById(R.id.sex);
         maxCal=(TextView)findViewById(R.id.calories);
         maxPro=(TextView)findViewById(R.id.protein);
+        maxFat=(TextView)findViewById(R.id.fat);
         maxFiber=(TextView)findViewById(R.id.fiber);
         maxSodium=(TextView)findViewById(R.id.sodium);
         maxSugar=(TextView)findViewById(R.id.sugar);
@@ -71,6 +72,7 @@ public class ProfileViewAndRecalculate extends AppCompatActivity {
         sex.setText(user.getSex());
         maxCal.setText(String.valueOf(user.getMax_cal()));
         maxPro.setText(String.valueOf(user.getMax_protein()));
+        maxFat.setText(String.valueOf(user.getMax_fat()));
         maxFiber.setText(String.valueOf(user.getMax_fiber()));
         maxSodium.setText(String.valueOf(user.getMax_sodium()));
         maxSugar.setText(String.valueOf(user.getMax_sugar()));

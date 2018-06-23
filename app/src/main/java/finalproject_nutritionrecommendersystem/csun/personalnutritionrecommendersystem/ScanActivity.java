@@ -126,7 +126,7 @@ public class ScanActivity extends AppCompatActivity {
                     }
                 }
                 else{//hack
-                    return "{\"nf_calories\":\"60\",\"nf_sodium\":\"400\",\"nf_dietary_fiber\":\"4\"," +
+                    return "{\"nf_calories\":\"60\",\"nf_sodium\":\"400\",\"nf_saturated_fat\":\"45\",\"nf_dietary_fiber\":\"4\"," +
                             "\"nf_sugars\":\"18\",\"nf_protein\":\"20\",\"nf_total_carbohydrate\":\"25\"}";
                 }
             }
@@ -150,7 +150,7 @@ public class ScanActivity extends AppCompatActivity {
                     k.printStackTrace();
                 }
             }
-            String cal="", sodium="", fiber="", sugar="", protein="", carbs="";
+            String cal="", sodium="", fiber="", sugar="", protein="", carbs="", fat="";
 
             try {
                 JSONObject myNutrientObj = new JSONObject(jsonData.toString());
@@ -159,11 +159,12 @@ public class ScanActivity extends AppCompatActivity {
                 fiber = myNutrientObj.get("nf_dietary_fiber").toString();
                 sugar = myNutrientObj.get("nf_sugars").toString();
                 protein = myNutrientObj.get("nf_protein").toString();
+                fat = myNutrientObj.get("nf_saturated_fat").toString();
                 carbs = myNutrientObj.get("nf_total_carbohydrate").toString();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            String[] nutrients = {cal, sodium, fiber, sugar, protein, carbs};
+            String[] nutrients = {cal, sodium, fiber, sugar, protein, fat, carbs};
            String[] nutrients2 =  normalize(nutrients);
 
             return Arrays.toString(nutrients2);
@@ -198,7 +199,8 @@ public class ScanActivity extends AppCompatActivity {
             intentRegister.putExtra("fiber", nutrients[2]);
             intentRegister.putExtra("sugar", nutrients[3]);
             intentRegister.putExtra("protein", nutrients[4]);
-            intentRegister.putExtra("carbs", nutrients[5]);
+            intentRegister.putExtra("fat", nutrients[5]);
+            intentRegister.putExtra("carbs", nutrients[6]);
             intentRegister.putExtra("EMAIL", email);
 
             startActivity(intentRegister);

@@ -103,66 +103,77 @@
             <TableRow>
                 <TextView
                     android:text="@string/calories"
-                    android:padding="3dip" />
+                    android:padding="2.65dip" />
                 <TextView
                     android:id="@+id/caloriesValue"
                     android:gravity="end"
-                    android:padding="3dip" />
+                    android:padding="2.65dip" />
             </TableRow>
 
             <TableRow>
                 <TextView
                     android:text="@string/proteins"
-                    android:padding="3dip" />
+                    android:padding="2.65dip" />
                 <TextView
                     android:text=""
                     android:id="@+id/protiensValue"
                     android:gravity="end"
-                    android:padding="3dip" />
+                    android:padding="2.65dip" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="Fat"
+                    android:padding="2.65dip" />
+                <TextView
+                    android:text=""
+                    android:id="@+id/fatValue"
+                    android:gravity="end"
+                    android:padding="2.65dip" />
             </TableRow>
 
             <TableRow>
                 <TextView
                     android:text="@string/fiber"
-                    android:padding="3dip" />
+                    android:padding="2.65dip" />
                 <TextView
                     android:text=""
                     android:id="@+id/fiberValue"
                     android:gravity="end"
-                    android:padding="3dip" />
+                    android:padding="2.65dip" />
             </TableRow>
 
             <TableRow>
                 <TextView
                     android:text="@string/sodium"
-                    android:padding="3dip" />
+                    android:padding="2.65dip" />
                 <TextView
                     android:text=""
                     android:id="@+id/sodiumValue"
                     android:gravity="end"
-                    android:padding="3dip" />
+                    android:padding="2.65dip" />
             </TableRow>
 
             <TableRow>
                 <TextView
                     android:text="@string/sugar"
-                    android:padding="3dip" />
+                    android:padding="2.65dip" />
                 <TextView
                     android:text=""
                     android:id="@+id/sugarValue"
                     android:gravity="end"
-                    android:padding="3dip" />
+                    android:padding="2.65dip" />
             </TableRow>
 
             <TableRow>
                 <TextView
                     android:text="@string/carb"
-                    android:padding="3dip" />
+                    android:padding="2.65dip" />
                 <TextView
                     android:text=""
                     android:id="@+id/carbValue"
                     android:gravity="end"
-                    android:padding="3dip" />
+                    android:padding="2.65dip" />
             </TableRow>
         </TableLayout>
 
