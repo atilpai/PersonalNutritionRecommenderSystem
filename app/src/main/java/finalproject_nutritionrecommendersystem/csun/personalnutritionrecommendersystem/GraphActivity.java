@@ -67,8 +67,8 @@ public class GraphActivity extends AppCompatActivity {
                 pieEntries.add(new PieEntry(yData[i], xData[i]));
             }
             ArrayList<Integer> colors = new ArrayList<>();
-            colors.add(Color.GREEN);
             colors.add(Color.RED);
+            colors.add(Color.GREEN);
 
             PieDataSet dataSet = new PieDataSet(pieEntries, "");
             dataSet.setColors(colors);
