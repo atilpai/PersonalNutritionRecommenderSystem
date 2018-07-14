@@ -41,14 +41,14 @@
     <string name="slideshow">Slideshow</string>
     <string name="today_s_count">Today\'s Count</string>
     <string name="add_food_item">Add Food item</string>
-    <string name="remaining">Remaining</string>
+    <string name="remaining">Day Consumption</string>
     <string name="calories">Calories</string>
     <string name="fiber">Fiber</string>
     <string name="proteins">Proteins</string>
     <string name="sugar">Sugar</string>
     <string name="sodium">Sodium (mg)</string>
     <string name="carb">Carbohydrates</string>
-    <string name="current_nutrients">Current Nutrients</string>
+    <string name="current_nutrients">Current Consumption per serving</string>
     <string name="quantity">Quantity</string>
     <string name="enter_quantity">Enter Quantity</string>
     <string name="calculate">Calculate</string>

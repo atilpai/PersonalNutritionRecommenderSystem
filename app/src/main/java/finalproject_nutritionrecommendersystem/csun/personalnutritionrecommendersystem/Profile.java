@@ -8,6 +8,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.view.View;
+import android.widget.CheckBox;
 
 import Helpers.InputValidation;
 import model.User;
@@ -23,12 +24,14 @@ public class Profile extends AppCompatActivity {
     private TextInputLayout age;
     private TextInputLayout weight;
     private TextInputLayout height;
+    private TextInputLayout heightIn;
     private TextInputLayout sex;
 
     private TextInputEditText textPhone;
     private TextInputEditText textAge;
     private TextInputEditText textWeight;
     private TextInputEditText textHeight;
+    private TextInputEditText textHeightIn;
     private TextInputEditText textSex;
 
     private AppCompatButton appCompatButtonCompleteProfile;
@@ -39,6 +42,7 @@ public class Profile extends AppCompatActivity {
     String name,email,psswd;
     private Double max_carb= Double.valueOf(0),max_protein= Double.valueOf(0),max_fiber= Double.valueOf(0), max_sugar= Double.valueOf(0), max_fat= Double.valueOf(0);
     private Integer max_cal=0, max_sodium=0;
+    private Double activityLevelSelection = 1.5;
 
 
     @Override
@@ -63,12 +67,14 @@ public class Profile extends AppCompatActivity {
         age=(TextInputLayout)findViewById(R.id.age);
         weight=(TextInputLayout)findViewById(R.id.weight);
         height=(TextInputLayout)findViewById(R.id.height);
+        heightIn=(TextInputLayout)findViewById(R.id.heightIn);
         sex=(TextInputLayout)findViewById(R.id.sex);
 
         textPhone=(TextInputEditText) findViewById(R.id.textphone);
         textAge=(TextInputEditText) findViewById(R.id.textage);
         textWeight=(TextInputEditText) findViewById(R.id.textweight);
         textHeight=(TextInputEditText) findViewById(R.id.textheight);
+        textHeightIn=(TextInputEditText) findViewById(R.id.textheightIn);
         textSex = (TextInputEditText) findViewById(R.id.textSex);
 
         appCompatButtonCompleteProfile = (AppCompatButton) findViewById(R.id.appCompatButtonCompleteProfile);
@@ -80,6 +86,16 @@ public class Profile extends AppCompatActivity {
         inputValidation = new InputValidation(activity);
     }
 
+    public void activityLevel(View v){
+        boolean checked = ((CheckBox) v).isChecked();
+
+        switch (v.getId()) {
+            case R.id.la: activityLevelSelection=1.45;
+            case R.id.ma: activityLevelSelection=1.55;
+            case R.id.va: activityLevelSelection=1.75;
+        }
+    }
+
     public void onClick(View v) {
 
                 verifyFromHelper();
@@ -88,7 +104,7 @@ public class Profile extends AppCompatActivity {
                 name=getIntent().getStringExtra("NAME");
                 //Receive in array list
                 populateUserObject();
-                user=databaseHelper.calculateRequiredValues(user);
+                user=databaseHelper.calculateRequiredValues(user, activityLevelSelection);
                 databaseHelper.addUser(user);
                 databaseHelper.addPerDayCounter(user);
                 databaseHelper.saveToUserTable(user);
@@ -105,7 +121,7 @@ public class Profile extends AppCompatActivity {
         user=new User();
         user.setPassword(psswd);
         user.setEmail(email);
-        user.setHeight(Double.parseDouble(textHeight.getEditableText().toString()));
+        user.setHeight(Double.parseDouble(textHeight.getEditableText().toString() + "." + textHeightIn.getEditableText().toString()));
         user.setWeight(Double.parseDouble(textWeight.getEditableText().toString()));
         user.setPhone(textPhone.getEditableText().toString());
         user.setSex(textSex.getEditableText().toString());
@@ -133,6 +149,9 @@ public class Profile extends AppCompatActivity {
             return;
         }
         if (!inputValidation.isInputEditTextFilled(textHeight, height, getString(R.string.error_message_height))) {
+            return;
+        }
+        if (!inputValidation.isInputEditTextFilled(textHeightIn, heightIn, getString(R.string.error_message_height))) {
             return;
         }
         if (!inputValidation.isInputEditTextFilled(textSex, sex, getString(R.string.error_message_sex))) {

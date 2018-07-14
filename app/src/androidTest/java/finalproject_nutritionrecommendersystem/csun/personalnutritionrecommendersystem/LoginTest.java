@@ -42,6 +42,10 @@ public class LoginTest {
                 allOf(withId(R.id.textInputEditTextEmail), isDisplayed()));
         textInputEditText2.perform(replaceText("summer@gmail.com"), closeSoftKeyboard());
 
+        ViewInteraction textInputEditText5 = onView(
+                allOf(withId(R.id.textInputEditTextPassword), isDisplayed()));
+        textInputEditText5.perform(click());
+
         ViewInteraction textInputEditText3 = onView(
                 allOf(withId(R.id.textInputEditTextPassword), isDisplayed()));
         textInputEditText3.perform(replaceText("wrongpassword"), closeSoftKeyboard());
@@ -50,10 +54,14 @@ public class LoginTest {
                 allOf(withId(R.id.appCompatButtonLogin), withText("Login"), isDisplayed()));
         appCompatButton.perform(click());
 
-        onView(withText(getString(R.string.error_valid_email_password))).inRoot(withDecorView(not(is(mActivityTestRule.getActivity().getWindow().getDecorView())))).check(matches(isDisplayed()));
+        onView(withId(R.id.appCompatButtonLogin)).check(matches(withText("Login")));
+
+        ViewInteraction textInputEditText6 = onView(
+                allOf(withId(R.id.textInputEditTextPassword), isDisplayed()));
+        textInputEditText6.perform(click());
 
         ViewInteraction textInputEditText4 = onView(
-                allOf(withId(R.id.textInputEditTextPassword), withText("wrongpassword"), isDisplayed()));
+                allOf(withId(R.id.textInputEditTextPassword), isDisplayed()));
         textInputEditText4.perform(replaceText("password"), closeSoftKeyboard());
 
         ViewInteraction appCompatButton2 = onView(

@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
+import android.widget.Toast;
 
 import Helpers.InputValidation;
 import model.User;
@@ -87,16 +88,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-
-            case R.id.appCompatButtonRegister:
-                postDataToSQLite();
-                break;
-
-            case R.id.appCompatTextViewLoginLink:
-                finish();
-                break;
-        }
+        if (v.getId() == R.id.appCompatButtonRegister) postDataToSQLite();
+        else if (v.getId() == R.id.appCompatTextViewLoginLink) finish();
     }
 
 
@@ -119,7 +112,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         if (!databaseHelper.checkUser(textInputEditTextEmail.getText().toString().trim())) {
-
             // Snack Bar to show success message that record saved successfully
             //Snackbar.make(nestedScrollView, getString(R.string.success_message), Snackbar.LENGTH_LONG).show();
             //emptyInputEditText();
@@ -128,11 +120,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 profileIntent.putExtra("PSSWD",textInputEditTextPassword.getText().toString().trim());
                 profileIntent.putExtra("NAME",textInputEditTextName.getText().toString().trim());
                 startActivity(profileIntent);
+        }
+        else {
+            // Show success message that record is wrong
+            Toast toast = Toast.makeText(RegisterActivity.this,getString(R.string.error_email_exists), Toast.LENGTH_LONG);
 
-
-        } else {
-            // Snack Bar to show error message that record already exists
-            Snackbar.make(nestedScrollView, getString(R.string.error_email_exists), Snackbar.LENGTH_LONG).show();
+            View toastView = toast.getView();
+            toastView.setBackgroundResource(R.drawable.toast_drawable);
+            toast.show();
         }
 
 

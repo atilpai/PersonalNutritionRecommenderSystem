@@ -126,8 +126,7 @@ public class ScanActivity extends AppCompatActivity {
                     }
                 }
                 else{//hack
-                    return "{\"nf_calories\":\"60\",\"nf_sodium\":\"400\",\"nf_saturated_fat\":\"45\",\"nf_dietary_fiber\":\"4\"," +
-                            "\"nf_sugars\":\"18\",\"nf_protein\":\"20\",\"nf_total_carbohydrate\":\"25\"}";
+                    return "{\"nf_calories\":\"60\",\"nf_sodium\":\"400\",\"nf_saturated_fat\":\"45\",\"nf_dietary_fiber\":\"4\",\"nf_sugars\":\"18\",\"nf_protein\":\"20\",\"nf_total_carbohydrate\":\"25\"}";
                 }
             }
 

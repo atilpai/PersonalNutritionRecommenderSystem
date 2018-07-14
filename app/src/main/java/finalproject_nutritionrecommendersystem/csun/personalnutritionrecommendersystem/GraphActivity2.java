@@ -66,17 +66,15 @@ public class GraphActivity2 extends AppCompatActivity {
         colors.add(Color.MAGENTA);
         colors.add(Color.YELLOW);
         colors.add(Color.GREEN);
-        colors.add(Color.RED);
         colors.add(Color.CYAN);
 
         ArrayList <BarEntry> barEntries = new ArrayList<>();
 
         barEntries.add(new BarEntry(1, Float.parseFloat(proteins)));
         barEntries.add(new BarEntry(2, Float.parseFloat(sugar)));
-        barEntries.add(new BarEntry(3, Float.parseFloat(sodium)));
-        barEntries.add(new BarEntry(4, Float.parseFloat(fiber)));
-        barEntries.add(new BarEntry(5, Float.parseFloat(carb)));
-        barEntries.add(new BarEntry(6, Float.parseFloat(fat)));
+        barEntries.add(new BarEntry(3, Float.parseFloat(fiber)));
+        barEntries.add(new BarEntry(4, Float.parseFloat(carb)));
+        barEntries.add(new BarEntry(5, Float.parseFloat(fat)));
 
         BarDataSet barDataSet = new BarDataSet(barEntries, "Nutrient consumption");
         barDataSet.setColors(colors);
@@ -85,13 +83,12 @@ public class GraphActivity2 extends AppCompatActivity {
 
         barEntries1.add(new BarEntry(1, Float.parseFloat(proteins)-Float.parseFloat(remProteins)));
         barEntries1.add(new BarEntry(2, Float.parseFloat(sugar)-Float.parseFloat(remSugar)));
-        barEntries1.add(new BarEntry(3, (Float.parseFloat(sodium))-(Float.parseFloat(remSodium))));
-        barEntries1.add(new BarEntry(4,Float.parseFloat(fiber)- Float.parseFloat(remFiber)));
-        barEntries1.add(new BarEntry(5, Float.parseFloat(carb)-Float.parseFloat(remCarb)));
-        barEntries1.add(new BarEntry(6, Float.parseFloat(fat)-Float.parseFloat(remFat)));
+        barEntries1.add(new BarEntry(3,Float.parseFloat(fiber)- Float.parseFloat(remFiber)));
+        barEntries1.add(new BarEntry(4, Float.parseFloat(carb)-Float.parseFloat(remCarb)));
+        barEntries1.add(new BarEntry(5, Float.parseFloat(fat)-Float.parseFloat(remFat)));
 
         BarDataSet barDataSet1 = new BarDataSet(barEntries1, "");
-        barDataSet1.setColors(Color.BLACK);
+        barDataSet1.setColors(Color.RED);
 
         ArrayList<BarDataSet> dataSets = new ArrayList<>();
         dataSets.add(barDataSet);
@@ -102,7 +99,7 @@ public class GraphActivity2 extends AppCompatActivity {
 
         barChart.setData(barData);
         Description descr = new Description();
-        descr.setText(" Proteins(g) - Sugar(g) - Sodium(mg) - Fiber(g) - Carbs(g) - Fat(g) ");
+        descr.setText(" Proteins(g)       Sugar(g)          Fiber(g)           Carbs(g)               Fat(g)        ");
         descr.setTextColor(Color.BLACK);
         descr.setTextSize(10.5f);
         barChart.setDescription(descr);
@@ -123,20 +120,27 @@ public class GraphActivity2 extends AppCompatActivity {
     }
 
     public void onClick(View v){
-//        if(v.getId()==R.id.nextView){
-//            Intent nextView=new Intent(getApplicationContext(),Animation.class);
-//            nextView.putExtra("remainingProteins", remProteins);
-//            nextView.putExtra("remainingFiber", remFiber);
-//            nextView.putExtra("remainingSugar", remSugar);
-//            nextView.putExtra("remainingSodium", remSodium);
-//            nextView.putExtra("remainingCarbs", remCarb);
-//            nextView.putExtra("remainingCalories", remCal);
-//            nextView.putExtra("EMAIL",email);
-//            nextView.putExtra("ID",id);
-//            startActivity(nextView);
-//        }
-//        else
-          if(v.getId() ==R.id.back){
+        if(v.getId()==R.id.nextView2){
+            Intent nextView=new Intent(getApplicationContext(),GraphActivity3.class);
+            nextView.putExtra("remainingProteins", remProteins);
+            nextView.putExtra("remainingFat", remFat);
+            nextView.putExtra("remainingFiber", remFiber);
+            nextView.putExtra("remainingSugar", remSugar);
+            nextView.putExtra("remainingSodium", remSodium);
+            nextView.putExtra("remainingCarbs", remCarb);
+            nextView.putExtra("remainingCalories", remCal);
+            nextView.putExtra("EMAIL",email);
+            nextView.putExtra("ID",id);
+            nextView.putExtra("Proteins", proteins);
+            nextView.putExtra("Fat", fat);
+            nextView.putExtra("Fiber", fiber);
+            nextView.putExtra("Sugar",sugar);
+            nextView.putExtra("Sodium", sodium);
+            nextView.putExtra("Carbs", carb);
+            nextView.putExtra("Calories", calories);
+            startActivity(nextView);
+        }
+        else if(v.getId() ==R.id.back2){
             Intent backToMain=new Intent(getApplicationContext(),GraphActivity.class);
             backToMain.putExtra("remainingProteins", remProteins);
               backToMain.putExtra("remainingFat", remFat);

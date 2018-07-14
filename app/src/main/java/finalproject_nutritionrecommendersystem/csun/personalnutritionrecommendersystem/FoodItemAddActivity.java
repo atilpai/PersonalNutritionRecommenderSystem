@@ -133,12 +133,12 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
         if(v.getId()==R.id.appCompatDone) {
             if(flag==1) {
                 if (addQuantity.getText().toString() != null) {
-                    Integer n = Integer.parseInt(addQuantity.getText().toString());
-                    userCalCount.setTotal_cal((userCalCount.getTotal_cal() + (itemNutrient.getCalories() * n)));
+                    double n = Double.parseDouble(addQuantity.getText().toString());
+                    userCalCount.setTotal_cal((int)(userCalCount.getTotal_cal() + (itemNutrient.getCalories() * n)));
                     userCalCount.setTotal_fiber(userCalCount.getTotal_fiber() + (itemNutrient.getFiber() * n));
                     userCalCount.setTotal_protein(userCalCount.getTotal_protein() + (itemNutrient.getProteins() * n));
                     userCalCount.setTotal_sugar(userCalCount.getTotal_sugar() + (itemNutrient.getSugar() * n));
-                    userCalCount.setTotal_sodium(userCalCount.getTotal_sodium() + (itemNutrient.getSodium() * n));
+                    userCalCount.setTotal_sodium((int)(userCalCount.getTotal_sodium() + (itemNutrient.getSodium() * n)));
                     userCalCount.setTotal_carb(userCalCount.getTotal_carb() + (itemNutrient.getCarb() * n));
                     userCalCount.setTotal_fat(userCalCount.getTotal_fat() + (itemNutrient.getFat() * n));
                 } else {
@@ -153,14 +153,26 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
                 startActivity(intentRegister);
             }
             else{
-                userCalCount.setTotal_cal(userCalCount.getTotal_cal() +Integer.valueOf(cal));
-                userCalCount.setTotal_fiber(userCalCount.getTotal_fiber() +Double.valueOf(fiber));
-                userCalCount.setTotal_protein(userCalCount.getTotal_protein() +Double.valueOf(protein));
-                userCalCount.setTotal_sugar(userCalCount.getTotal_sugar() +Double.valueOf(sugar));
-                userCalCount.setTotal_sodium(userCalCount.getTotal_sodium() +Integer.valueOf(sodium));
-                userCalCount.setTotal_carb(userCalCount.getTotal_carb() +Double.valueOf(carbs));
-                userCalCount.setTotal_fat(userCalCount.getTotal_fat() +Double.valueOf(fat));
 
+                if(addQuantity.getText().toString() == null) {
+                    userCalCount.setTotal_cal(userCalCount.getTotal_cal() + Integer.valueOf(cal));
+                    userCalCount.setTotal_fiber(userCalCount.getTotal_fiber() + Double.valueOf(fiber));
+                    userCalCount.setTotal_protein(userCalCount.getTotal_protein() + Double.valueOf(protein));
+                    userCalCount.setTotal_sugar(userCalCount.getTotal_sugar() + Double.valueOf(sugar));
+                    userCalCount.setTotal_sodium(userCalCount.getTotal_sodium() + Integer.valueOf(sodium));
+                    userCalCount.setTotal_carb(userCalCount.getTotal_carb() + Double.valueOf(carbs));
+                    userCalCount.setTotal_fat(userCalCount.getTotal_fat() + Double.valueOf(fat));
+                }
+                else{
+                    double n = Double.parseDouble(addQuantity.getText().toString());
+                    userCalCount.setTotal_cal((int)((userCalCount.getTotal_cal() + Integer.valueOf(cal)*n)));
+                    userCalCount.setTotal_fiber((userCalCount.getTotal_fiber() + Double.valueOf(fiber)*n));
+                    userCalCount.setTotal_protein((userCalCount.getTotal_protein() + Double.valueOf(protein)*n));
+                    userCalCount.setTotal_sugar((userCalCount.getTotal_sugar() + Double.valueOf(sugar))*n);
+                    userCalCount.setTotal_sodium((int)((userCalCount.getTotal_sodium() + Integer.valueOf(sodium)*n)));
+                    userCalCount.setTotal_carb((userCalCount.getTotal_carb() + Double.valueOf(carbs)*n));
+                    userCalCount.setTotal_fat((userCalCount.getTotal_fat() + Double.valueOf(fat)*n));
+                }
                 databaseHelper.updateUserCalorieCountTable(userCalCount);
             }
             Intent intentRegister = new Intent(getApplicationContext(), MainActivity.class);

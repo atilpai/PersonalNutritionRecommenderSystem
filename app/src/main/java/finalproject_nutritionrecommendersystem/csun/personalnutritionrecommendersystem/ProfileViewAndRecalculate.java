@@ -87,7 +87,7 @@ public class ProfileViewAndRecalculate extends AppCompatActivity {
             user.setHeight(Double.valueOf(height.getEditableText().toString().trim()));
             user.setWeight(Double.valueOf(weight.getEditableText().toString().trim()));
             user.setAge(Integer.valueOf(age.getEditableText().toString().trim()));
-            user=databaseHelper.calculateRequiredValues(user);
+            user=databaseHelper.calculateRequiredValues(user,1.5);
             databaseHelper.saveToUserTable(user);
             setFields(user);
 

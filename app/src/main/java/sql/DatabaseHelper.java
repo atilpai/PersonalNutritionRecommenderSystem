@@ -32,7 +32,6 @@ public class DatabaseHelper {
     String url="jdbc:mysql://finalprojectcsun.curhdrjmgd2k.us-west-2.rds.amazonaws.com/foodnutrients";
     String userCon="atilpai";
     String passwordCon="anishatil";
-  
     Calendar c = Calendar.getInstance();
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -194,27 +193,24 @@ public class DatabaseHelper {
         }
     }
 
-    public User calculateRequiredValues(User user) {
+    public User calculateRequiredValues(User user, double activityLevel) {
         double bmr = 0.0;
-        if (user.getSex().equals("F") || user.getSex().equals("f"))  bmr = 655 + (4.35*user.getWeight()) + (4.7*0.083*user.getHeight()) - (4.7*user.getAge());
-        else bmr = 66 + (6.23*user.getWeight()) + (12.7*0.083*user.getHeight()) - (6.8*user.getAge());
+        if (user.getSex().equals("M") || user.getSex().equals("m") || user.getSex().equals("Male") || user.getSex().equals("male"))
+            bmr = (10*((user.getHeight()*30.48)-100)) + (6.25*user.getHeight()*30.48) -(5*user.getAge()) +5;
+        else bmr = (10*((user.getHeight()*30.48)-100)) + (6.25*user.getHeight()*30.48) -(5*user.getAge()) -161;
 
-        max_cal= (int) (bmr*1.55);
+        max_cal= (int) (bmr*activityLevel);
 
-        if(user.getAge() < 20) {
-            max_protein = 0.2*bmr*1.55;
-            max_carb = 0.55*bmr*1.55;
-            max_sugar = 0.1*bmr*1.55;
-            max_fat = 0.1*bmr*1.55;
-        }
-        else if(user.getAge() > 20 ) {
-            max_protein = 0.22*bmr*1.55;
-            max_carb = 0.55*bmr*1.55;
-            max_sugar = 0.1*bmr*1.55;
-            max_fat = 0.1*bmr*1.55;
-        }
+        max_protein = 0.2*max_cal*0.25;
+        max_carb = max_cal*0.1375;
 
-        if(user.getSex().equals("M")|| user.getSex().equals("m")){
+        if (user.getSex().equals("M") || user.getSex().equals("m") || user.getSex().equals("Male") || user.getSex().equals("male"))
+            max_sugar=37.5;
+        else max_sugar=25;
+
+        max_fat=max_cal*61/2000;
+
+        if(user.getSex().equals("M")|| user.getSex().equals("m")|| user.getSex().equals("Male") || user.getSex().equals("male")){
             if(user.getAge()<50){
                 max_fiber=38;
             }
@@ -222,7 +218,7 @@ public class DatabaseHelper {
                 max_fiber=30;
             }
         }
-        else if(user.getSex().equals("F") || user.getSex().equals("f")){
+        else {
             if(user.getAge()<50){
                 max_fiber=25;
             }
@@ -236,6 +232,7 @@ public class DatabaseHelper {
         user.setMax_sodium(max_sodium);
         user.setMax_sugar(max_sugar);
         user.setMax_carb(max_carb);
+        user.setMax_fat(max_fat);
 
         return user;
     }
@@ -399,19 +396,20 @@ public class DatabaseHelper {
 
 
     public boolean checkUser(String email) {
+        String sql = "SELECT  id FROM userprofile WHERE email= '" + email + "'";
+        Boolean exist=false;
         try {
             Connection con = getConnection();
-            String sql = "SELECT  id FROM userprofile WHERE email=" + email;
             PreparedStatement stmt = (PreparedStatement) con.prepareStatement(sql);
             ResultSet rs = (ResultSet) stmt.executeQuery();
-            if(getSize(rs)==1){
-                return true;
+            if(rs.next()){
+                exist=true;
             }
         }
         catch(SQLException e) {
             e.printStackTrace();
         }
-            return false;
+        return exist;
     }
 
 

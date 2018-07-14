@@ -11,16 +11,20 @@
     android:paddingTop="20dp"
     tools:context="finalproject_nutritionrecommendersystem.csun.personalnutritionrecommendersystem.MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/textphone"
                 android:layout_width="match_parent"
@@ -28,16 +32,16 @@
                 android:hint="@string/phone"
                 android:inputType="text"
                 android:maxLines="1"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 tools:inputType="phone" />
 
         </android.support.design.widget.TextInputLayout>
+
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/textage"
                 android:layout_width="match_parent"
@@ -45,46 +49,16 @@
                 android:hint="@string/age"
                 android:inputType="text"
                 android:maxLines="1"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 tools:inputType="number" />
 
         </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/weight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/textweight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Weight(lbs)"
-                android:inputType="text"
-                android:maxLines="1"
-                android:textColor="@android:color/black"
-                tools:inputType="numberDecimal" />
 
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/height"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/textheight"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Height(ft)"
-            android:inputType="text"
-            android:maxLines="1"
-            android:textColor="@android:color/black"
-            tools:inputType="numberDecimal" />
         <android.support.design.widget.TextInputLayout
             android:id="@+id/sex"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/textSex"
                 android:layout_width="match_parent"
@@ -92,11 +66,112 @@
                 android:hint="@string/sex"
                 android:inputType="text"
                 android:maxLines="1"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 tools:inputType="text" />
 
         </android.support.design.widget.TextInputLayout>
-        <android.support.v7.widget.AppCompatButton
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/textweight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Weight(lbs)"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@android:color/white"
+                tools:inputType="numberDecimal" />
+
+        </android.support.design.widget.TextInputLayout>
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/height"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/textheight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Height(Feet)"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@android:color/white"
+                    tools:inputType="numberDecimal" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/heightIn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/textheightIn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Inches"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@android:color/white"
+                    tools:inputType="numberDecimal" />
+            </android.support.design.widget.TextInputLayout>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lightly Active"
+                    android:id="@+id/la"
+                    android:onClick="activityLevel"
+                    android:textColor="@android:color/white"
+                    />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Moderately Active"
+                    android:id="@+id/ma"
+                    android:onClick="activityLevel"
+                    android:textColor="@android:color/white"
+                    />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Very Active"
+                    android:id="@+id/va"
+                    android:onClick="activityLevel"
+                    android:textColor="@android:color/white"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.v7.widget.AppCompatButton
             android:id="@+id/appCompatButtonCompleteProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -104,5 +179,10 @@
             android:background="@color/colorTextHint"
             android:onClick="onClick"
             android:text="@string/calculate_and_complete_profile" />
+
     </android.support.v7.widget.LinearLayoutCompat>
+
+
+
+    </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

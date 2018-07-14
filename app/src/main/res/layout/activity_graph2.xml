@@ -8,21 +8,42 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingTop="10dp"
-    tools:context="finalproject_nutritionrecommendersystem.csun.personalnutritionrecommendersystem.GraphActivity">
-
-    <android.support.v7.widget.AppCompatButton
-        android:id="@+id/back"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:background="@color/colorTextHint"
-        android:onClick="onClick"
-        android:text="Back" />
+    tools:context="finalproject_nutritionrecommendersystem.csun.personalnutritionrecommendersystem.GraphActivity2">
 
     <com.github.mikephil.charting.charts.BarChart
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:id="@+id/idBarChart"
         ></com.github.mikephil.charting.charts.BarChart>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/back2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="2dp"
+            android:background="@color/colorTextHint"
+            android:onClick="onClick"
+            android:text="Back" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginLeft="100dp"
+        android:gravity="center"
+        android:background="@color/colorTextHint"
+        android:textColor="@android:color/white"
+        android:text="Tap Bar to know more!"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/nextView2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="330dp"
+            android:background="@color/colorTextHint"
+            android:onClick="onClick"
+            android:text="View" />
+
 </RelativeLayout>
