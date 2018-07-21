@@ -238,11 +238,12 @@ public class DatabaseHelper {
     }
 
 
-    public void updateUserCalorieCountTable(UserCalorieCount userCalCount) {
+    public void updateUserCalorieCountTable(UserCalorieCount userCalCount, String source, Double serving) {
 
         Connection con= getConnection();
         java.util.Date date=c.getTime();
         PreparedStatement stmt = null;
+        PreparedStatement stmt1 = null;
         try{
             if(checkIfRecordPresentForCurrentDate(userCalCount.getId())) {
                 String sql = "UPDATE dailyfoodcounter SET curr_cal="
@@ -277,8 +278,14 @@ public class DatabaseHelper {
                 stmt = (PreparedStatement) con.prepareStatement(sql);
                 stmt.executeUpdate();
             }
+            String sql3 = "INSERT INTO dailyFoodItemList" +"(mainid, source, date, serving) " + "VALUES" +
+                            "("+"'"+userCalCount.getId()+"',"+"'"+source.replace("'", "")+"','"+df.format(date)+"','"+serving+"')";
+            stmt1 = (PreparedStatement) con.prepareStatement(sql3);
+            stmt1.execute();
+
             con.close();
             stmt.close();
+            stmt1.close();
         }
         catch(SQLException e){
             e.printStackTrace();

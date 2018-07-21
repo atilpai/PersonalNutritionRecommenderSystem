@@ -126,7 +126,7 @@ public class ScanActivity extends AppCompatActivity {
                     }
                 }
                 else{//hack
-                    return "{\"nf_calories\":\"60\",\"nf_sodium\":\"400\",\"nf_saturated_fat\":\"45\",\"nf_dietary_fiber\":\"4\",\"nf_sugars\":\"18\",\"nf_protein\":\"20\",\"nf_total_carbohydrate\":\"25\"}";
+                    return "{\"item_name\":\"Not Found | Default\",\"nf_calories\":\"60\",\"nf_sodium\":\"400\",\"nf_saturated_fat\":\"45\",\"nf_dietary_fiber\":\"4\",\"nf_sugars\":\"18\",\"nf_protein\":\"20\",\"nf_total_carbohydrate\":\"25\"}";
                 }
             }
 
@@ -149,7 +149,7 @@ public class ScanActivity extends AppCompatActivity {
                     k.printStackTrace();
                 }
             }
-            String cal="", sodium="", fiber="", sugar="", protein="", carbs="", fat="";
+            String cal="", sodium="", fiber="", sugar="", protein="", carbs="", fat="", itemName="";
 
             try {
                 JSONObject myNutrientObj = new JSONObject(jsonData.toString());
@@ -160,10 +160,12 @@ public class ScanActivity extends AppCompatActivity {
                 protein = myNutrientObj.get("nf_protein").toString();
                 fat = myNutrientObj.get("nf_saturated_fat").toString();
                 carbs = myNutrientObj.get("nf_total_carbohydrate").toString();
+                itemName = myNutrientObj.get("item_name").toString();
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            String[] nutrients = {cal, sodium, fiber, sugar, protein, fat, carbs};
+            String[] nutrients = {cal, sodium, fiber, sugar, protein, fat, carbs, itemName};
            String[] nutrients2 =  normalize(nutrients);
 
             return Arrays.toString(nutrients2);
@@ -201,6 +203,7 @@ public class ScanActivity extends AppCompatActivity {
             intentRegister.putExtra("fat", nutrients[5]);
             intentRegister.putExtra("carbs", nutrients[6]);
             intentRegister.putExtra("EMAIL", email);
+            intentRegister.putExtra("scannedItemName",nutrients[7]);
 
             startActivity(intentRegister);
            //

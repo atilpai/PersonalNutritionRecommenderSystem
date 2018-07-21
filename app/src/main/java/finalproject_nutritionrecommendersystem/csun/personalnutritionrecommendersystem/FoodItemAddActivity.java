@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
@@ -36,7 +37,7 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
     SearchView simpleSearchView;
     ListView list;
     ListViewAdaptor adapter;
-    String email, cal, sodium, sugar, carbs, fiber, protein, fat;
+    String email, cal, sodium, sugar, carbs, fiber, protein, fat, scannedItemName;
     Barcode barcode;
     String selItem;
     ItemNutrient itemNutrient;
@@ -68,6 +69,7 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
         protein = getIntent().getStringExtra("protein");
         carbs = getIntent().getStringExtra("carbs");
         fat = getIntent().getStringExtra("fat");
+        scannedItemName = getIntent().getStringExtra("scannedItemName");
 //        barcode = getIntent().getParcelableExtra("barcode");
         id=databaseHelper.getId(email);
         simpleSearchView=(SearchView)findViewById(R.id.searchView);
@@ -105,9 +107,8 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
                 selItem = (String) list.getItemAtPosition(position);
                // simpleSearchView.setQueryHint(selItem);
                 simpleSearchView.setQuery(selItem,false);
+                simpleSearchView.setBackgroundColor(Color.WHITE);
                 list.setVisibility(View.INVISIBLE);
-
-
             }
         });
 
@@ -132,7 +133,7 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
 
         if(v.getId()==R.id.appCompatDone) {
             if(flag==1) {
-                if (addQuantity.getText().toString() != null) {
+                if (!addQuantity.getText().toString().isEmpty()) {
                     double n = Double.parseDouble(addQuantity.getText().toString());
                     userCalCount.setTotal_cal((int)(userCalCount.getTotal_cal() + (itemNutrient.getCalories() * n)));
                     userCalCount.setTotal_fiber(userCalCount.getTotal_fiber() + (itemNutrient.getFiber() * n));
@@ -144,7 +145,7 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
                 } else {
                     calculateNewValues();
                 }
-                databaseHelper.updateUserCalorieCountTable(userCalCount);
+                databaseHelper.updateUserCalorieCountTable(userCalCount, selItem, Double.parseDouble(addQuantity.getText().toString()));
                 flag=0;
             }
             else if(flag==2){
@@ -153,8 +154,8 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
                 startActivity(intentRegister);
             }
             else{
-
-                if(addQuantity.getText().toString() == null) {
+                double count =0;
+                if(addQuantity.getText().toString().isEmpty()) {
                     userCalCount.setTotal_cal(userCalCount.getTotal_cal() + Integer.valueOf(cal));
                     userCalCount.setTotal_fiber(userCalCount.getTotal_fiber() + Double.valueOf(fiber));
                     userCalCount.setTotal_protein(userCalCount.getTotal_protein() + Double.valueOf(protein));
@@ -162,6 +163,7 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
                     userCalCount.setTotal_sodium(userCalCount.getTotal_sodium() + Integer.valueOf(sodium));
                     userCalCount.setTotal_carb(userCalCount.getTotal_carb() + Double.valueOf(carbs));
                     userCalCount.setTotal_fat(userCalCount.getTotal_fat() + Double.valueOf(fat));
+                    count=1;
                 }
                 else{
                     double n = Double.parseDouble(addQuantity.getText().toString());
@@ -172,8 +174,9 @@ public class FoodItemAddActivity extends AppCompatActivity implements SearchView
                     userCalCount.setTotal_sodium((int)((userCalCount.getTotal_sodium() + Integer.valueOf(sodium)*n)));
                     userCalCount.setTotal_carb((userCalCount.getTotal_carb() + Double.valueOf(carbs)*n));
                     userCalCount.setTotal_fat((userCalCount.getTotal_fat() + Double.valueOf(fat)*n));
+                    count=n;
                 }
-                databaseHelper.updateUserCalorieCountTable(userCalCount);
+                databaseHelper.updateUserCalorieCountTable(userCalCount, scannedItemName, count);
             }
             Intent intentRegister = new Intent(getApplicationContext(), MainActivity.class);
             intentRegister.putExtra("EMAIL", email);
