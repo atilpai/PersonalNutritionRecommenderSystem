@@ -361,7 +361,7 @@ public class DatabaseHelper {
                user.setSex(rs.getString("sex"));
                user.setHeight(rs.getDouble("height"));
                user.setWeight(rs.getDouble("weight"));
-               user.setPhone(String.valueOf(rs.getInt("contact")));
+               user.setPhone(String.valueOf(rs.getInt("phone")));
                user.setId(id);
 
            }
@@ -454,6 +454,35 @@ public class DatabaseHelper {
         return name;
     }
 
+    public ArrayList<String> getMealHistory(int userID){
+        ArrayList<String> items=new ArrayList<String>();
+        String lastDate="";
+        String currDate="";
+
+        Connection con=getConnection();
+        String sql = "SELECT source, serving, date from foodnutrients.dailyFoodItemList WHERE mainid=?";
+        try{
+            PreparedStatement getMeals = (PreparedStatement) con.prepareStatement(sql);
+            getMeals.setString(1, Integer.toString(userID));
+            ResultSet rs = (ResultSet) getMeals.executeQuery();
+            int i=0;
+            java.util.Date date=c.getTime();
+            while(rs.next()){
+                currDate = rs.getString("date");
+                if (!lastDate.equals(currDate)){
+                    lastDate = currDate;
+                    if (currDate.equals(df.format(date))) items.add("TODAY");
+                    else items.add(currDate.toUpperCase());
+                }
+                items.add(rs.getString("source") + "\nServing: "+ rs.getString("serving"));
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return items;
+    }
+
     public ArrayList<String> getResults() {
         ArrayList<String> items=new ArrayList<String>();
 
@@ -463,7 +492,6 @@ public class DatabaseHelper {
         try {
             pst = (PreparedStatement) con.prepareStatement(sql);
             ResultSet rs=(ResultSet) pst.executeQuery();
-            int i=1;
             items.add("");
             while(rs.next()){
                 items.add(rs.getString("distinct_description")+": "+rs.getString("quantity_description"));

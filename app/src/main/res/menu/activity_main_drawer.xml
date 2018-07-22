@@ -11,6 +11,10 @@
 
             android:title="@string/today_s_count" />
         <item
+            android:id="@+id/mealHistory"
+
+            android:title="Meal History" />
+        <item
             android:id="@+id/deleteUser"
 
             android:title="@string/delete_account" />

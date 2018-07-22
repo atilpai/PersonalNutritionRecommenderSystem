@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity
     String email="",name="";
     DatabaseHelper databaseHelper=new DatabaseHelper();
     TextView cal,pro,fiber,sugar, sodium, carb, fat;
-    int id;
+    int id, userId;
     UserCalorieCount userCalCount;
     User user;
     NestedScrollView nestedScrollView;
@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity
         //main activity page-->Welcome Page
         email = getIntent().getStringExtra("EMAIL");
         id=databaseHelper.getId(email);
+        userId = id;
         intViews();
         name=databaseHelper.getNameFromID(id);
         greeting=(TextView)findViewById(R.id.Greeting);
@@ -211,12 +212,19 @@ public class MainActivity extends AppCompatActivity
             Intent intentMain = new Intent(getApplicationContext(), MainActivity.class);
             intentMain.putExtra("EMAIL",email);
             startActivity(intentMain);
-        } else if (id == R.id.profile) {
+        }
+        else if (id == R.id.profile) {
             Intent intentProfileView=new Intent(getApplicationContext(),ProfileViewAndRecalculate.class);
             intentProfileView.putExtra("ID",email);
             startActivity(intentProfileView);
 
-        } else if(id == R.id.deleteUser){
+        }
+        else if(id == R.id.mealHistory){
+            Intent intentMealHistory = new Intent(getApplicationContext(), MealHistory.class);
+            intentMealHistory.putExtra("userId", userId);
+            startActivity(intentMealHistory);
+        }
+        else if(id == R.id.deleteUser){
             User user=new User();
             user.setId(databaseHelper.getId(email));
             databaseHelper.deleteUser(user);

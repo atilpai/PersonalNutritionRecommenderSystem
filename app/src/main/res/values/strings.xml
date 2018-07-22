@@ -79,5 +79,6 @@
     <string name="ReportFrom">Report From : YYYY-MM-DD</string>
     <string name="ReportTo">Report To   : YYYY-MM-DD</string>
     <string name="get_results">Get Results</string>
+    <string name="title_activity_meal_history">MealHistory</string>
 
 </resources>
